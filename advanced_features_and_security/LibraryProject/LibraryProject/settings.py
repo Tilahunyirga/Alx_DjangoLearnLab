@@ -123,4 +123,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODE = user.side=tk.
+AUTH_USER_MODE = "bookshelf.CustomUser"
