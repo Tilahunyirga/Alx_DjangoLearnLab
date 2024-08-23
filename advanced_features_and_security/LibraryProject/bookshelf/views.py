@@ -5,10 +5,9 @@ from django.contrib.auth.models import Group
 from .models import post 
 
 def book_list(request):
-  if book_list = book_list.objects.all():
-    return render(request, "bookshelf/book_list.html", {"posts":book_list} )
+  book_list = book_list.objects.all()
+  return render(request, "bookshelf/book_list.html", {"posts":book_list} )
    
-  else:
-    raise ValueError ("incorrect value")
 
 # Create your views here.
+@permission_required('bookshelf.can_edit', raise_exception=True)
