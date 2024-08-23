@@ -18,7 +18,7 @@ class book(models.Model):
 class post(models.Model):
   author = models.ForeignKey(settings.AUTH_USER_MODEL, )
   title = models.CharField(max_length=100)    
-  class meta:
+  class Meta:
     Permissions =[
       ("can_view_Book","can view book" ),
       ("can_create_Book", "can create book"),
