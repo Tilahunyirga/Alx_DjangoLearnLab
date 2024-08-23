@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import Permission
-
+from django.conf import settings
 
 
 
@@ -12,13 +12,14 @@ class CustomUser(AbstractUser):
   
   
 class book(models.Model):
-  pass   
+  title =models.CharField(max_length=100),
+  author = models.CharField(max_length=100)   
   class meta:
     Permissions =[
-      ("can_view","can view" ),
-      ("can_create", "can create"),
-      ("can_edit", "can edit"),
-      ("can_delete", "can delete")
+      ("can_view_Book","can view book" ),
+      ("can_create_Book", "can create book"),
+      ("can_edit_Book", "can edit book"),
+      ("can_delete_Book", "can delete book")
       
     ]
   
