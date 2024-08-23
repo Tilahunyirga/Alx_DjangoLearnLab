@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
   profile_photo =models.ImageField(width_field=10, blank=True)
   
   
-class book(models.Model):
+class Book(models.Model):
   title =models.CharField(max_length=100),
   author = models.CharField(max_length=100) 
 
