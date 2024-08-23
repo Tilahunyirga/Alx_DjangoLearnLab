@@ -10,6 +10,9 @@ class CustomUser(AbstractUser):
   date_of_birth = models.DateField
   profile_photo =models.ImageField(width_field=10, blank=True)
   
+  
+class book(models.Model):
+  pass   
   class meta:
     Permissions =[
       ("can_view","can view" ),
