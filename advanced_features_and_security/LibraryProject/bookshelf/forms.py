@@ -1,16 +1,12 @@
-# forms.py
-
 from django import forms
 
-class BookSearchForm(forms.Form):
-    search_term = forms.CharField(
-        max_length=100,
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Search for books...'})
-    )
+class ExampleForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)
 
-    def clean_search_term(self):
-        search_term = self.cleaned_data.get('search_term', '').strip()
-        if not search_term:
-            raise forms.ValidationError("Please enter a search term.")
-        return search_term
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if not name:
+            raise forms.ValidationError("This field is required.")
+        return name
