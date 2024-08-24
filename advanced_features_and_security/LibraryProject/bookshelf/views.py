@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login 
 from django.contrib.auth.models import Group
 from .models import Book
-from .forms import BookSearchForm
+from .forms import ExampleForm
 
 def book_list(request):
   book_list = book_list.objects.all()
@@ -18,7 +18,7 @@ def book_list(request):
 
 
 def search_books(request):
-    form = BookSearchForm(request.GET or None)
+    form = ExampleForm(request.GET or None)
     if form.is_valid():
         search_term = form.cleaned_data['search_term']
         books = Book.objects.filter(title__icontains=search_term)
