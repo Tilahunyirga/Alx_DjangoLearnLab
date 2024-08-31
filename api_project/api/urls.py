@@ -2,7 +2,7 @@ from django.urls import path, include
 from .views import BookListAPIView , BookViewSet
 from rest_framework.routers import DefaultRouter
 
-router = DefaultRouter.Book()
+router = DefaultRouter()
 router.register(r'book', BookViewSet)
 
 urlpatterns = [
