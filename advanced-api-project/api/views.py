@@ -23,7 +23,7 @@ class BookUpdateView(generics.UpdateAPIView):
   serializer_class =BookSerializer 
   lookup_field = 'id'
   
-class BookDestroyView(generics.DestroyAPIView):
+class BookDeleteView(generics.DeleteAPIView):
   queryset = Book.objects.all()
   serializer_class = BookSerializer
   lookup_field = 'id '
