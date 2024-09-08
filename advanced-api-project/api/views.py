@@ -16,6 +16,14 @@ class BookListView(generics.ListAPIView):
   queryset =Book.objects.all()
   serializer_class = BookSerializer
   
+  def get_queryset(self):
+    title = self.kwargs['title']
+    author = self.kwargs['author']
+    publication_year = self.kwargs['publication_year']
+    
+    return Book.objects.filter(book_title = title, book_author = author, book_publication_year = publication_year)
+  
+  
   
 class BookDetailView(generics.RetrieveAPIView):
   queryset =Book.objects.all()
