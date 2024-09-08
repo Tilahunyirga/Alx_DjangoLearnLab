@@ -24,7 +24,8 @@ class BookListView(generics.ListAPIView):
     
     return Book.objects.filter(book_title = title, book_author = author, book_publication_year = publication_year)
   
-  
+  filter_backends = [filters.OrderingFilter]
+  ordering_field = ['title','author','publication_year']
   
 class BookDetailView(generics.RetrieveAPIView):
   queryset =Book.objects.all()
