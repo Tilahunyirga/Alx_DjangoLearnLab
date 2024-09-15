@@ -6,28 +6,33 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from rest_framework import generics
 from .models import Post
+from django.views.generic import (ListView, CreateView, 
+                     DeleteView,
+                     DetailView, 
+                     UpdateView )
+from django.views.generic.detail import DetailView
 from .serializers import PostSerializer
 
 
 
 
-class PostListAPIView(generics.ListAPIView):
+class PostListView(ListView):
   queryset = Post.objects.all()
   serializer_class = PostSerializer
   
-class PostDetailAPIView(generics.ListAPIViewAPIView):
+class PostDetailView(DetailView):
   queryset = Post.objects.get('id')
   serializer_class = PostSerializer
   
-class PostCreateAPIView(generics.CreateAPIView):
+class PostCreateView(CreateView):
   queryset = Post.objects.all()
   serializer_class = PostSerializer
   
-class PostUpdateAPIView(generics.UpdateAPIView):
+class PostUpdateView(UpdateView):
   queryset = Post.objects.all()
   serializer_class = PostSerializer   
   
-class PostDeleteAPIView(generics.DestroyAPIView):
+class PostDeleteView(DeleteView):
   queryset = Post.objects.all()
   serializer_class = PostSerializer     
 
