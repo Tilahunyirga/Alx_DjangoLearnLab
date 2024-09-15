@@ -82,7 +82,7 @@ def profile(request):
   
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, CreateView,
 from django.urls import reverse_lazy
 from .models import Post, Comment
 from .forms import CommentForm
@@ -116,3 +116,17 @@ class CommentDeleteView(DeleteView):
 
     def get_queryset(self):
         return Comment.objects.filter(author=self.request.user)
+
+class CommentCreateView(CreateView):
+    model = Comment
+    success_url = reverse_lazy('blog_home')
+
+    def get_queryset(self):
+        return Comment.objects.filter(author=self.request.user)
+      
+class CommentUpdateView(UpdateView):
+    model = Comment
+    success_url = reverse_lazy('blog_home')
+
+    def get_queryset(self):
+        return Comment.objects.filter(author=self.request.user)      
