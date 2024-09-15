@@ -23,7 +23,7 @@ from .views import (PostCreateView,
                     PostUpdateView)
 
 urlpatterns=[
-    path('post/<int:pk/>',PostUpdateView.as_view(), name='update')
-    path('delete/<int:pk/>', PostDeleteView.as_view(), name="delete"),
-    path('create/',PostCreateView.as_view(), name= 'new')
+    path('post/<int:pk/>',PostUpdateView.as_view(), name='post-update')
+    path('post/delete/<int:pk/>', PostDeleteView.as_view(), name="post-delete"),
+    path('post/new/',PostCreateView.as_view(), name= 'post-new')
 ]
