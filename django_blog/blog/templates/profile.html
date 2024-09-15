@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+
+{% if user.is_authenticated %} You are logged in as {{ user }}.
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+</form>
+{% else %} You are not logged in.
+<a href="{% url 'login' %}">Click here to log in.</a>
+{% endif %}
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
