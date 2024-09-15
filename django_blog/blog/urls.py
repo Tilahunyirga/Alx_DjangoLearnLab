@@ -39,3 +39,11 @@ urlpatterns = [
     path('post/<int:pk>/comments/new/', CommentUpdateView.as_view(), name='delete_comment'),
     
 ]
+
+from django.urls import path
+from .views import post_search, PostListViewByTag
+
+urlpatterns = [
+    path('search/', post_search, name='post_search'),
+    path('tags/<slug:tag_slug>/', PostListViewByTag.as_view(), name='post_list_by_tag'),
+]
