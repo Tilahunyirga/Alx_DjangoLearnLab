@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from rest_framework import generics
+
 from .models import Post
 from django.views.generic import (ListView, CreateView, 
                      DeleteView,

@@ -9,10 +9,21 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
         ...
 ]
-
 from . import views
 
 urlpatterns += [
    path('register/', views.register, name='register'),
    path('profile/', views.profile, name='profile'),
+]
+
+from .views import (PostCreateView,
+                    PostDetailView,
+                    PostListView,
+                    PostDeleteView,
+                    PostUpdateView)
+
+urlpatterns=[
+    path('post/<int:pk/>',PostUpdateView.as_view(), name='update')
+    path('delete/<int:pk/>', PostDeleteView.as_view(), name="delete"),
+    path('create/',PostCreateView.as_view(), name= 'new')
 ]
