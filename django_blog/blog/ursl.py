@@ -8,7 +8,7 @@ urlpatterns = [
     path('accounts/profile/',
              TemplateView.as_view(template_name='profile.html'),
              name='profile'),
-    path("signup/", SignUpView.as_view(), name="templates/registration/signup"),
-    path("login/", LoginView.as_view(), name="templates/registration/login"),
+    path("signup/", SignUpView.as_view(), name="static/signup"),
+    path("login/", LoginView.as_view(), name="static/login"),
         ...
 ]
