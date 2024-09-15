@@ -2,3 +2,28 @@
 <p>{{ post.content }}</p>
 <p>Published on: {{ post.published_date }}</p>
 <p>Author: {{ post.author }}</p>
+
+<h3>Comments</h3>
+<ul>
+    {% for comment in post.comments.all %}
+        <li>
+            <p>{{ comment.author }}: {{ comment.content }}</p>
+            <p>{{ comment.created_at }}</p>
+            {% if comment.author == request.user %}
+                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+    <h4>Add a new comment</h4>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Comment</button>
+    </form>
+{% else %}
+    <p>You must be logged in to post a comment.</p>
+{% endif %}

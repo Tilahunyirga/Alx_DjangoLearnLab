@@ -6,4 +6,12 @@ class Post(models.Model):
   content = models.TextField()
   published_date = models.DateTimeField(auto_now_add=True)
   author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Comment(models.Model):
+  post = models.ManyToManyField(Post,)  
+  author = models.ForeignKey(User, on_delete=models.CASCADE)
+  content = models.TextField()
+  created_at = models.DateTimeField()
+  updated_at = models.DateTimeField()
   
