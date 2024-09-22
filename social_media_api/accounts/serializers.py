@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from .models import CustomUser
+from rest_framework.authtoken.models import Token
 
 class RegisterSerializer(serializers.ModelSerializer):
+  serializer =serializers.CharField()
     class Meta:
         model = CustomUser
         fields = ('username', 'password', 'bio', 'profile_picture')
