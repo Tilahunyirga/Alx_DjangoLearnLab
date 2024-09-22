@@ -71,3 +71,44 @@ def unlike_post(request, pk):
     
     # If no like exists, inform the user
     return Response({'detail': 'You have not liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404  # Ensure this is imported
+from .models import Post, Like  # Import your Post and Like models
+
+# Like a post
+@api_view(['POST'])
+def like_post(request, pk):
+    # Retrieve the post using get_object_or_404, ensuring 404 if not found
+    post = get_object_or_404(Post, pk=pk)
+    
+    # Get the user from the request
+    user = request.user
+
+    # Use Like.objects.get_or_create() to either get an existing like or create a new one
+    like, created = Like.objects.get_or_create(user=user, post=post)
+
+    if created:
+        # If the like was created (i.e., the user is liking the post for the first time)
+        return Response({'detail': 'Post liked successfully.'}, status=status.HTTP_201_CREATED)
+    
+    # If the like already exists (i.e., the user has already liked the post)
+    return Response({'detail': 'You have already liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
+
+# Unlike a post
+@api_view(['POST'])
+def unlike_post(request, pk):
+    # Retrieve the post using get_object_or_404, ensuring 404 if not found
+    post = get_object_or_404(Post, pk=pk)
+
+    # Get the user from the request
+    user = request.user
+
+    # Check if the Like object exists for the given user and post
+    like = Like.objects.filter(user=user, post=post).first()
+
+    if like:
+        # If the like exists, delete it (
