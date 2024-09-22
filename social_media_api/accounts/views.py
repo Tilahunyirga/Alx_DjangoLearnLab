@@ -72,7 +72,7 @@ class FollowViewSet(GenericViewSet):
 
 
 
-from rest_framework import generics
+from rest_framework.generics import generics.GenericAPIView,
 from rest_framework.permissions import IsAuthenticated
 from .models import Post
 from .serializers import PostSerializer
