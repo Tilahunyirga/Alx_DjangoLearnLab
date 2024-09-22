@@ -17,4 +17,6 @@ router.register(r'follow', FollowViewSet, basename='follow')
 urlpatterns = [
     path('follow/<int:pk>/', FollowViewSet.as_view({'post': 'follow'}), name='follow-user'),
     path('unfollow/<int:pk>/', FollowViewSet.as_view({'post': 'unfollow'}), name='unfollow-user'),
+    path("unfollow/<int:user_id>/", FollowViewSet.as_view({''})), 
+    path("follow/<int:user_id>")
 ]
