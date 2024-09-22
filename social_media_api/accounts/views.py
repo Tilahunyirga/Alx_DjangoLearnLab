@@ -86,6 +86,6 @@ class FeedView(generics.ListAPIView):
         user = self.request.user
       
 following.all()
-user_return =Post.objects.filter(author__in=following_users).order_by
+Post.objects.filter(author__in=following_users).order_by
         return user_return
 
