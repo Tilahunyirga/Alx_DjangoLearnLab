@@ -112,3 +112,5 @@ def unlike_post(request, pk):
 
     if like:
         # If the like exists, delete it (
+generics.get_object_or_404(Post, pk=pk),
+Like.objects.get_or_create(user=request.user, post=post)
