@@ -73,13 +73,13 @@ class FollowViewSet(GenericViewSet):
 
 
 from rest_framework.generics import generics.GenericAPIView,
-from rest_framework.permissions import Permissions.IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from .models import Post
 from .serializers import PostSerializer
 
 class FeedView(generics.ListAPIView):
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         # Get posts from users that the current user follows
