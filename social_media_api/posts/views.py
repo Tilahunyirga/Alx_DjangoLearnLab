@@ -19,25 +19,28 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
-from rest_framework import status, generics
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .models import Post, Like
+from .serializers import PostSerializer
 from notifications.models import Notification
 
-# View to like a post
+# Like a post
 @api_view(['POST'])
 def like_post(request, pk):
-    # Use get_object_or_404 to retrieve the post or return 404 if not found
+    # Get the post or return 404 if not found
     post = get_object_or_404(Post, pk=pk)
+    
+    # Get the user from the request
     user = request.user
 
-    # Use get_or_create to like the post
+    # Check if the user has already liked the post, if not, create the like
     like, created = Like.objects.get_or_create(user=user, post=post)
 
     if created:
-        # If the like is created, notify the post author
+        # If a new like was created, trigger a notification for the post author
         Notification.objects.create(
             recipient=post.author,
             actor=user,
@@ -45,22 +48,26 @@ def like_post(request, pk):
             target=post
         )
         return Response({'detail': 'Post liked.'}, status=status.HTTP_201_CREATED)
-
-    # If the user has already liked the post
+    
+    # If the user already liked the post, inform them
     return Response({'detail': 'You have already liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
 
-# View to unlike a post
+# Unlike a post
 @api_view(['POST'])
 def unlike_post(request, pk):
-    # Use get_object_or_404 to retrieve the post
+    # Get the post or return 404 if not found
     post = get_object_or_404(Post, pk=pk)
+
+    # Get the user from the request
     user = request.user
 
-    # Try to get the Like object, and delete it if found
+    # Try to get the Like object if it exists
     like = Like.objects.filter(user=user, post=post).first()
 
     if like:
+        # If the like exists, delete it
         like.delete()
         return Response({'detail': 'Post unliked.'}, status=status.HTTP_200_OK)
-
+    
+    # If no like exists, inform the user
     return Response({'detail': 'You have not liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
