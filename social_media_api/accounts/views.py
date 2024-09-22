@@ -44,3 +44,44 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import GenericViewSet
+from .models import CustomUser
+from .serializers import UserSerializer
+
+class FollowViewSet(GenericViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    @action(detail=True, methods=['post'])
+    def follow(self, request, pk=None):
+        user_to_follow = self.get_object()
+        request.user.following.add(user_to_follow)
+        return Response({'status': 'following'}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def unfollow(self, request, pk=None):
+        user_to_unfollow = self.get_object()
+        request.user.following.remove(user_to_unfollow)
+        return Response({'status': 'unfollowed'}, status=status.HTTP_200_OK)
+
+
+
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import Post
+from .serializers import PostSerializer
+
+class FeedView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Get posts from users that the current user follows
+        user = self.request.user
+        following_users = user.following.all()
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')

@@ -28,3 +28,14 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_followers_count(self, obj):
         return obj.followers.count()
+      
+from rest_framework import serializers
+from .models import CustomUser
+
+class UserSerializer(serializers.ModelSerializer):
+    following = serializers.SlugRelatedField(slug_field='username', read_only=True, many=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'following', 'followers']
+      
